@@ -21,16 +21,10 @@ export class UsersService {
   }
 
   async softDeleteUser(id: string): Promise<User> {
-    return this.userModel.findByIdAndUpdate(id, { estado: 'eliminado' }, { new: true }).exec();
+    return this.userModel.findByIdAndUpdate(id, { estado: false }, { new: true }).exec();
   }
 
-  async findAll(): Promise<User[]> {
-    return this.userModel.find().exec(); // Devuelve todos los usuarios sin filtrar por estado
-  }
-  
   async findAllActive(): Promise<User[]> {
-    return this.userModel.find({ estado: 'activo' }).exec();
+    return this.userModel.find({ estado: true }).exec();
   }
-
-  // Otros métodos del servicio...
 }

@@ -18,8 +18,8 @@ export class User extends Document {
   @Prop({ required: true })
   rol: string;
 
-  @Prop({ default: 'activo' })
-  estado: string;
+  @Prop({ default: true })
+  estado: boolean;
 
   @Prop({ type: Date })
   cumpleaños: Date;

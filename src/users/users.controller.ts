@@ -1,4 +1,4 @@
-import { Controller, Post, Put, Delete, Body, Param, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Post, Put, Delete, Get, Body, Param, HttpCode, HttpStatus } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { User } from './user.schema';
 
@@ -24,5 +24,9 @@ export class UsersController {
     return this.usersService.softDeleteUser(id);
   }
 
-  // Otros métodos del controlador...
+  @Get('active')
+  @HttpCode(HttpStatus.OK)
+  async findAllActive(): Promise<User[]> {
+    return this.usersService.findAllActive();
+  }
 }

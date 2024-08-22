@@ -16,5 +16,9 @@ export class UsersService {
     return this.userModel.findOne({ usuario }).exec();
   }
 
-  // Otros métodos para manipular usuarios...
+  async updateUser(id: string, updateUserDto: any): Promise<User> {
+    return this.userModel.findByIdAndUpdate(id, updateUserDto, { new: true }).exec();
+  }
+
+  // Otros métodos del servicio...
 }

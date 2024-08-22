@@ -7,8 +7,8 @@ export class AuthController {
 
   @HttpCode(HttpStatus.OK)
   @Post('login')
-  async login(@Body() loginDto: { usuario: string; contraseña: string }) {
-    const user = await this.authService.validateUser(loginDto.usuario, loginDto.contraseña);
+  async login(@Body() loginDto: { usuario: string; password: string }) {
+    const user = await this.authService.validateUser(loginDto.usuario, loginDto.password);
     if (!user) {
       return { message: 'Usuario o contraseña incorrectos' };
     }

@@ -13,7 +13,7 @@ export class User extends Document {
   usuario: string;
 
   @Prop({ required: true })
-  contraseña: string;
+  password: string;  // Cambio realizado aquí
 
   @Prop({ required: true })
   rol: string;
@@ -22,7 +22,7 @@ export class User extends Document {
   estado: boolean;
 
   @Prop({ type: Date })
-  cumpleaños: Date;
+  fecha_nacimiento: Date;  // Cambio realizado aquí
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

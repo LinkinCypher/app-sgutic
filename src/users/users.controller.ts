@@ -1,4 +1,4 @@
-import { Controller, Post, Put, Body, Param, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Post, Put, Delete, Body, Param, HttpCode, HttpStatus } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { User } from './user.schema';
 
@@ -16,6 +16,12 @@ export class UsersController {
   @HttpCode(HttpStatus.OK)
   async update(@Param('id') id: string, @Body() updateUserDto: any): Promise<User> {
     return this.usersService.updateUser(id, updateUserDto);
+  }
+
+  @Delete('delete/:id')
+  @HttpCode(HttpStatus.OK)
+  async delete(@Param('id') id: string): Promise<User> {
+    return this.usersService.softDeleteUser(id);
   }
 
   // Otros métodos del controlador...

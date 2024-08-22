@@ -1,11 +1,15 @@
 module.exports = {
   apps : [{
     name: 'app-sgutic',
-    script: 'dist/main.js', // Ruta al archivo principal de tu aplicación compilada
-    instances: 1,           // Número de instancias a ejecutar
-    autorestart: true,      // Reiniciar automáticamente si falla
-    watch: false,           // No supervisar los archivos para reiniciar automáticamente
-    max_memory_restart: '1G', // Reiniciar si el uso de memoria excede 1GB
+    script: 'dist/main.js',
+    watch: true, // Habilita la observación de cambios
+    ignore_watch: ["node_modules", "logs"], // Ignora estos directorios para evitar reinicios innecesarios
+    watch_options: {
+      followSymlinks: false
+    },
+    instances: 1,
+    autorestart: true,
+    max_memory_restart: '1G',
     env: {
       NODE_ENV: 'development',
       PORT: 3000,
@@ -18,4 +22,3 @@ module.exports = {
     }
   }]
 };
-

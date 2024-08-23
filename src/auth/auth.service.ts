@@ -11,10 +11,23 @@ export class AuthService {
 
   async validateUser(usuario: string, password: string): Promise<any> {
     const user = await this.usersService.findOneByUsuario(usuario);
-    if (user && await this.usersService.validatePassword(password, user.password)) {
-      const { password, ...result } = user.toObject(); 
-      return result;
+    
+    if (user) {
+      console.log(`Usuario encontrado: ${usuario}`);
+      const isPasswordValid = await this.usersService.validatePassword(password, user.password);
+      
+      if (isPasswordValid) {
+        console.log('Contraseña válida: true');
+        const { password, ...result } = user.toObject(); 
+        return result;
+      } else {
+        console.log('Contraseña válida: false');
+      }
+    } else {
+      console.log(`Usuario no encontrado: ${usuario}`);
     }
+    
+    console.log('Usuario o contraseña incorrectos');
     return null;
   }
 

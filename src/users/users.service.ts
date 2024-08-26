@@ -35,8 +35,13 @@ export class UsersService {
     return this.userModel.findOne({ usuario }).exec();
   }
 
-  // Actualiza un usuario existente
+  // Actualiza un usuario existente, incluyendo la posibilidad de cambiar la contraseña
   async updateUser(id: string, updateUserDto: any): Promise<User> {
+    if (updateUserDto.password) {
+      const salt = await bcrypt.genSalt();
+      updateUserDto.password = await bcrypt.hash(updateUserDto.password, salt);
+    }
+
     const updatedUser = await this.userModel.findByIdAndUpdate(id, updateUserDto, { new: true }).exec();
 
     // Registrar la acción en la auditoría

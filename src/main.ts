@@ -3,10 +3,18 @@ import { AppModule } from './app.module';
 import * as dotenv from 'dotenv';
 
 async function bootstrap() {
-  dotenv.config(); // Carga las variables de entorno desde el archivo .env
+  dotenv.config(); // Cargar las variables de entorno
 
   const app = await NestFactory.create(AppModule);
-  const port = process.env.PORT || 3000; // Usa el puerto de la variable de entorno o el puerto 3000 por defecto
+
+  // Habilitar CORS para permitir solicitudes desde otros orígenes
+  app.enableCors({
+    origin: 'http://localhost:8100', // Permite solo solicitudes desde la aplicación Ionic
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+  });
+
+  const port = process.env.PORT || 3000;
   await app.listen(port);
   console.log(`La aplicación se está ejecutando en: http://localhost:${port}`);
 }

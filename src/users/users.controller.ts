@@ -1,4 +1,4 @@
-import { Controller, Post, Put, Delete, Get, Body, Param, UseGuards, Request } from '@nestjs/common';
+import { Controller, Post, Put, Delete, Get, Body, Param, UseGuards, Request, NotFoundException } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './user.schema';
@@ -47,4 +47,15 @@ export class UsersController {
   getProfile(@Request() req) {
     return req.user; // Devuelve los datos del usuario autenticado
   }
+
+  @Get(':id')
+  @Roles(Role.Admin, Role.Gestor) // Solo los administradores y gestores pueden ver usuarios específicos
+  async getUsuario(@Param('id') id: string): Promise<User> {
+    const usuario = await this.usersService.findOneById(id);
+    if (!usuario) {
+      throw new NotFoundException('Usuario no encontrado');
+    }
+    return usuario;
+  }
+
 }

@@ -14,6 +14,12 @@ export class AuthService {
     
     if (user) {
       console.log(`Usuario encontrado: ${usuario}`);
+      
+      if (!user.estado) {
+        console.log(`Usuario inactivo: ${usuario}`);
+        return null; // Usuario inactivo
+      }
+
       const isPasswordValid = await this.usersService.validatePassword(password, user.password);
       
       if (isPasswordValid) {

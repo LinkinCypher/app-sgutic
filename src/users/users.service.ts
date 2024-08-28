@@ -74,5 +74,17 @@ export class UsersService {
   async findOneById(id: string): Promise<User> {
     return this.userModel.findById(id).exec();
   }
+
+  // Búsqueda de usuarios por nombre, apellido o usuario
+  async searchUsers(term: string): Promise<User[]> {
+    const regex = new RegExp(term, 'i'); // 'i' para que sea insensible a mayúsculas/minúsculas
+    return this.userModel.find({
+      $or: [
+        { nombres: regex },
+        { apellidos: regex },
+        { usuario: regex }
+      ]
+    }).exec();
+  }
   
 }

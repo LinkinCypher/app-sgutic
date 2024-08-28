@@ -1,4 +1,4 @@
-import { Controller, Post, Put, Delete, Get, Body, Param, UseGuards, Request, NotFoundException } from '@nestjs/common';
+import { Controller, Post, Put, Delete, Get, Body, Param, UseGuards, Request, NotFoundException, Query } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './user.schema';
@@ -48,6 +48,12 @@ export class UsersController {
     return req.user; // Devuelve los datos del usuario autenticado
   }
 
+  @Get('search')
+  @Roles(Role.Admin, Role.Gestor) // Solo administradores y gestores pueden buscar usuarios
+  async search(@Query('term') term: string): Promise<User[]> {
+    return this.usersService.searchUsers(term);
+  }
+
   @Get(':id')
   @Roles(Role.Admin, Role.Gestor) // Solo los administradores y gestores pueden ver usuarios específicos
   async getUsuario(@Param('id') id: string): Promise<User> {
@@ -57,5 +63,4 @@ export class UsersController {
     }
     return usuario;
   }
-
 }

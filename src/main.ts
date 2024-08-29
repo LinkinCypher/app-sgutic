@@ -9,13 +9,13 @@ async function bootstrap() {
 
   // Habilitar CORS para permitir solicitudes desde otros orígenes
   app.enableCors({
-    origin: 'http://localhost:8100', // Permite solo solicitudes desde la aplicación Ionic
+    origin: '*', // Permite solicitudes desde cualquier origen
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Permitir estos métodos HTTP
     credentials: true, // Permitir el uso de cookies o autenticación basada en sesiones
   });
 
   const port = process.env.PORT || 3000; // Usa el puerto desde .env o el 3000 por defecto
-  await app.listen(port);
-  console.log(`La aplicación se está ejecutando en: http://localhost:${port}`);
+  await app.listen(port, '0.0.0.0'); // Escuchar en todas las interfaces de red
+  console.log(`La aplicación se está ejecutando en: http://0.0.0.0:${port}`);
 }
 bootstrap();

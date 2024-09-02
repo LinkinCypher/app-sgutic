@@ -74,7 +74,15 @@ npm run start
 Ejecutar servidor por pm2
 ```bash
 npm install -g pm2
-pm2 start pm2.config.js
+pm2 start pm2.config.js --watch
+```
+
+Implementación: carpetas principales:
+```bash
+dist
+node_modules
+.env
+pm2.config.js
 ```
 
 Configurar Git por primera vez

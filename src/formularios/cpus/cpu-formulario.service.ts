@@ -16,6 +16,7 @@ export class CPUFormularioService {
       ...createFormularioDto,
       numeroFormulario, // Número de formulario generado
     });
+    console.log('Formulario de CPU: Creado');
     return nuevoFormulario.save();
   }
 

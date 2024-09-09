@@ -25,6 +25,11 @@ export class CPUFormularioService {
     return this.cpuFormularioModel.find().exec();
   }
 
+  // Obtener formularios por el usuario logueado
+  async obtenerFormulariosPorUsuario(usuario: string): Promise<CPUFormulario[]> {
+    return this.cpuFormularioModel.find({ usuario }).exec(); // Filtra por el campo 'usuario'
+  }
+  
   // Obtener un formulario por su ID
   async obtenerFormularioPorId(id: string): Promise<CPUFormulario> {
     const formulario = await this.cpuFormularioModel.findById(id).exec();
@@ -42,8 +47,10 @@ export class CPUFormularioService {
     if (!formularioActualizado) {
       throw new NotFoundException(`Formulario con ID ${id} no encontrado`);
     }
+    console.log(`Formulario ${id} actualizado por el usuario ${updateFormularioDto.usuario}`);
     return formularioActualizado;
   }
+  
 
   // Generar el número de formulario
   private async generarNumeroFormulario(createFormularioDto: any): Promise<string> {

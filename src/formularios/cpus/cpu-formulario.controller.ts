@@ -1,6 +1,8 @@
 import { Controller, Post, Body, UseGuards, Request, Get, Param, Put } from '@nestjs/common';
 import { CPUFormularioService } from './cpu-formulario.service';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { Roles } from 'src/roles/roles.decorator';
+import { Role } from 'src/roles/role.enum';
 
 @Controller('cpus')
 @UseGuards(JwtAuthGuard) // Protege la ruta con JWT
@@ -15,7 +17,7 @@ export class CPUFormularioController {
     return this.cpuFormularioService.crearFormulario(createFormularioDto);
   }
 
-  // Nueva ruta para obtener los formularios del usuario logueado
+  // Obtener los formularios del usuario logueado
   @Get('mis-formularios')
   async obtenerMisFormularios(@Request() req: any) {
     const usuarioLogueado = req.user; // Extrae el usuario logueado
@@ -33,5 +35,12 @@ export class CPUFormularioController {
     updateFormularioDto.usuario = usuarioLogueado.username; // Asigna el usuario logueado al campo de usuario
 
     return this.cpuFormularioService.actualizarFormulario(id, updateFormularioDto);
+  }
+
+  // Obtener todos los formularios (sin importar el usuario)
+  @Get('all')
+  @Roles(Role.Admin) // Solo accesible para administradores
+  async obtenerTodosLosFormularios() {
+    return this.cpuFormularioService.obtenerFormularios();
   }
 }

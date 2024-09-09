@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
-@Schema()
+@Schema({ timestamps: true }) // Habilita timestamps para agregar createdAt y updatedAt
 export class CPUFormulario extends Document {
   @Prop({ required: true })
   institucion: string;

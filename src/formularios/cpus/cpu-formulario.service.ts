@@ -22,10 +22,11 @@ export class CPUFormularioService {
     const formularioGuardado = await nuevoFormulario.save();
     
     // Enviar notificación al usuario
-    await this.notificationsService.enviarNotificacion(
-      createFormularioDto.usuario, 
-      `Has creado un nuevo formulario: ${numeroFormulario}`
-    );
+    await this.notificationsService.enviarNotificacion({
+      titulo: 'Nuevo formulario de CPU creado',
+      mensaje: `El formulario ${numeroFormulario} ha sido creado por ${createFormularioDto.usuario}.`,
+      destinatario: createFormularioDto.usuario
+    });
 
     console.log('Formulario de CPU: Creado');
     return formularioGuardado;
@@ -60,11 +61,12 @@ export class CPUFormularioService {
       throw new NotFoundException(`Formulario con ID ${id} no encontrado`);
     }
 
-    // Enviar notificación al usuario
-    await this.notificationsService.enviarNotificacion(
-      updateFormularioDto.usuario, 
-      `Has actualizado el formulario: ${formularioActualizado.numeroFormulario}`
-    );
+    // Enviar notificación después de actualizar el formulario
+    await this.notificationsService.enviarNotificacion({
+      titulo: 'Formulario de CPU actualizado',
+      mensaje: `El formulario ${formularioActualizado.numeroFormulario} ha sido actualizado por ${updateFormularioDto.usuario}.`,
+      destinatario: updateFormularioDto.usuario
+    });
 
     console.log(`Formulario ${id} actualizado por el usuario ${updateFormularioDto.usuario}`);
     return formularioActualizado;

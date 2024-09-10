@@ -16,7 +16,8 @@ import { NotificationsModule } from './notifications/notifications.module';
     MongooseModule.forRoot(process.env.MONGODB_URI),
     UsersModule,
     AuthModule, // Conecta a MongoDB usando la URI desde las variables de entorno
-    CPUFormularioModule, NotificationsModule, // Módulo de CPUFormulario
+    CPUFormularioModule, // Módulo de CPUFormulario
+    NotificationsModule // Módulo de Notificaciones
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -27,6 +27,8 @@ export class CPUFormularioService {
       mensaje: `El formulario ${numeroFormulario} ha sido creado por ${createFormularioDto.usuario}.`,
       destinatario: createFormularioDto.usuario
     });
+
+    console.log(`Formulario ${numeroFormulario} creado por el usuario ${createFormularioDto.usuario}`);
     return formularioGuardado;
   }
 

@@ -2,11 +2,13 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CPUFormulario } from './cpu-formulario.schema';
+import { NotificationsService } from 'src/notifications/notifications.service';
 
 @Injectable()
 export class CPUFormularioService {
   constructor(
-    @InjectModel(CPUFormulario.name) private cpuFormularioModel: Model<CPUFormulario>
+    @InjectModel(CPUFormulario.name) private cpuFormularioModel: Model<CPUFormulario>,
+    private notificationsService: NotificationsService // Inyecta el servicio de notificaciones
   ) {}
 
   // Crear un nuevo formulario de CPU
@@ -16,8 +18,17 @@ export class CPUFormularioService {
       ...createFormularioDto,
       numeroFormulario, // Número de formulario generado
     });
+
+    const formularioGuardado = await nuevoFormulario.save();
+    
+    // Enviar notificación al usuario
+    await this.notificationsService.enviarNotificacion(
+      createFormularioDto.usuario, 
+      `Has creado un nuevo formulario: ${numeroFormulario}`
+    );
+
     console.log('Formulario de CPU: Creado');
-    return nuevoFormulario.save();
+    return formularioGuardado;
   }
 
   // Obtener todos los formularios de CPU
@@ -44,9 +55,17 @@ export class CPUFormularioService {
     const formularioActualizado = await this.cpuFormularioModel.findByIdAndUpdate(id, updateFormularioDto, {
       new: true,
     }).exec();
+
     if (!formularioActualizado) {
       throw new NotFoundException(`Formulario con ID ${id} no encontrado`);
     }
+
+    // Enviar notificación al usuario
+    await this.notificationsService.enviarNotificacion(
+      updateFormularioDto.usuario, 
+      `Has actualizado el formulario: ${formularioActualizado.numeroFormulario}`
+    );
+
     console.log(`Formulario ${id} actualizado por el usuario ${updateFormularioDto.usuario}`);
     return formularioActualizado;
   }

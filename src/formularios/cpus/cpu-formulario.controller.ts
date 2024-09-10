@@ -13,7 +13,6 @@ export class CPUFormularioController {
   async crearFormulario(@Body() createFormularioDto: any, @Request() req: any) {
     const usuarioLogueado = req.user; // Extrae el usuario logueado
     createFormularioDto.usuario = usuarioLogueado.username; // Asigna el usuario logueado al campo de usuario
-
     return this.cpuFormularioService.crearFormulario(createFormularioDto);
   }
 
@@ -33,14 +32,21 @@ export class CPUFormularioController {
   ) {
     const usuarioLogueado = req.user; // Extrae el usuario logueado
     updateFormularioDto.usuario = usuarioLogueado.username; // Asigna el usuario logueado al campo de usuario
-
     return this.cpuFormularioService.actualizarFormulario(id, updateFormularioDto);
   }
 
-  // Obtener todos los formularios (sin importar el usuario)
+  // Obtener todos los formularios por usuario
   @Get('all')
   @Roles(Role.Admin) // Solo accesible para administradores
   async obtenerTodosLosFormularios() {
     return this.cpuFormularioService.obtenerFormularios();
   }
+
+  // Obtener el número de formularios por usuario
+  @Get('estadisticas/formularios-por-usuario')
+  @Roles(Role.Admin) // Solo accesible para administradores
+  async obtenerConteoFormulariosPorUsuario() {
+    return this.cpuFormularioService.contarFormulariosPorUsuario();
+  }
+
 }

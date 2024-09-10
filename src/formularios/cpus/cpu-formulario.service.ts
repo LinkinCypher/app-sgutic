@@ -92,4 +92,12 @@ export class CPUFormularioService {
     const numero = (count + 1).toString().padStart(4, '0'); // Padding con ceros para asegurar cuatro dígitos
     return `${institucion}-${provincia}-${edificio}-FMA-CPU-${currentYear}-${numero}`;
   }
+
+  // Obtener el número de formularios creados por cada usuario
+  async contarFormulariosPorUsuario(): Promise<any> {
+    return this.cpuFormularioModel.aggregate([
+      { $group: { _id: "$usuario", total: { $sum: 1 } } }
+    ]);
+  }
+
 }

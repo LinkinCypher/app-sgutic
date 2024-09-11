@@ -73,25 +73,24 @@ export class CPUFormularioService {
   }
   
 
-  // Generar el número de formulario
-  private async generarNumeroFormulario(createFormularioDto: any): Promise<string> {
-    const { institucion, provincia, edificio } = createFormularioDto;
+  // Generar el número de formulario basado en la combinación de institución, provincia, edificio y año
+private async generarNumeroFormulario(createFormularioDto: any): Promise<string> {
+  const { institucion, provincia, edificio } = createFormularioDto;  // Extrae los campos relevantes
+  const currentYear = new Date().getFullYear();  // Obtener el año actual
 
-    // Obtener el año actual
-    const currentYear = new Date().getFullYear();
+  // Contar cuántos formularios existen para la combinación de institución, provincia, edificio y el año actual
+  const count = await this.cpuFormularioModel.countDocuments({
+    institucion,
+    provincia,
+    edificio,
+    numeroFormulario: { $regex: `${currentYear}` }  // Filtrar formularios del año actual
+  }).exec();
 
-    // Contar cuántos formularios existen para esta combinación de Institución - Provincia - Edificio y el año actual
-    const count = await this.cpuFormularioModel.countDocuments({
-      institucion,
-      provincia,
-      edificio,
-      numeroFormulario: { $regex: `${currentYear}` }  // Busca formularios del año actual
-    }).exec();
+  // Generar el número de formulario basado en el conteo actual
+  const numero = (count + 1).toString().padStart(4, '0');  // Incrementamos el contador con cuatro dígitos
+  return `${institucion}-${provincia}-${edificio}-FMA-CPU-${currentYear}-${numero}`;  // Generar el número final del formulario
+}
 
-    // Generar el número de formulario basado en el conteo actual
-    const numero = (count + 1).toString().padStart(4, '0'); // Padding con ceros para asegurar cuatro dígitos
-    return `${institucion}-${provincia}-${edificio}-FMA-CPU-${currentYear}-${numero}`;
-  }
 
   // Obtener el número de formularios creados por cada usuario
   async contarFormulariosPorUsuario(): Promise<any> {

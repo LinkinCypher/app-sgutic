@@ -13,49 +13,49 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post('create')
-  @Roles(Role.Admin) // Solo los administradores pueden crear usuarios
+  @Roles(Role.Administrador) // Solo los administradores pueden crear usuarios
   async create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
   }
 
   @Put('update/:id')
-  @Roles(Role.Admin) // Solo los administradores pueden editar usuarios
+  @Roles(Role.Administrador) // Solo los administradores pueden editar usuarios
   async update(@Param('id') id: string, @Body() updateUserDto: any): Promise<User> {
     return this.usersService.updateUser(id, updateUserDto);
   }
 
   @Delete('delete/:id')
-  @Roles(Role.Admin) // Solo los administradores pueden eliminar usuarios
+  @Roles(Role.Administrador) // Solo los administradores pueden eliminar usuarios
   async delete(@Param('id') id: string): Promise<User> {
     return this.usersService.softDeleteUser(id);
   }
 
   @Get('active')
-  @Roles(Role.Admin, Role.Gestor) // Administradores y gestores pueden ver usuarios activos
+  @Roles(Role.Administrador) // Solo los Roles pueden activar usuarios
   async findAllActive(): Promise<User[]> {
     return this.usersService.findAllActive();
   }
 
   @Get('all')
-  @Roles(Role.Admin) // Solo los administradores pueden ver todos los usuarios
+  @Roles(Role.Administrador) // Solo los Roles pueden ver todos los usuarios
   async findAll(): Promise<User[]> {
     return this.usersService.findAll();
   }
 
   @Get('profile')
-  @Roles(Role.Admin, Role.Gestor, Role.Tecnico, Role.Usuario) // Todos los roles pueden ver su perfil
+  @Roles(Role.Administrador, Role.SuperSoporte, Role.SuperEquipos, Role.SuperMantenimiento, Role.SuperProyectos, Role.Soporte, Role.Equipos, Role.Mantenimiento, Role.Proyectos, Role.Lectura) // Solo los Roles pueden ver el dato de usuario
   getProfile(@Request() req) {
     return req.user; // Devuelve los datos del usuario autenticado
   }
 
   @Get('search')
-  @Roles(Role.Admin, Role.Gestor) // Solo administradores y gestores pueden buscar usuarios
+  @Roles(Role.Administrador, Role.SuperSoporte, Role.SuperEquipos, Role.SuperMantenimiento, Role.SuperProyectos) // Solo los Roles pueden buscar
   async search(@Query('term') term: string): Promise<User[]> {
     return this.usersService.searchUsers(term);
   }
 
   @Get(':id')
-  @Roles(Role.Admin, Role.Gestor) // Solo los administradores y gestores pueden ver usuarios específicos
+  @Roles(Role.Administrador, Role.SuperSoporte, Role.SuperEquipos, Role.SuperMantenimiento, Role.SuperProyectos) // SOlo los Roles pueden ver por Id
   async getUsuario(@Param('id') id: string): Promise<User> {
     const usuario = await this.usersService.findOneById(id);
     if (!usuario) {

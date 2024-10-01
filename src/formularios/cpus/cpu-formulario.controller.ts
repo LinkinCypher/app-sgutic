@@ -37,14 +37,14 @@ export class CPUFormularioController {
 
   // Obtener todos los formularios por usuario
   @Get('all')
-  @Roles(Role.Admin) // Solo accesible para administradores
+  @Roles(Role.Administrador) // Solo accesible para administradores
   async obtenerTodosLosFormularios() {
     return this.cpuFormularioService.obtenerFormularios();
   }
 
   // Obtener el número de formularios por usuario
   @Get('estadisticas/formularios-por-usuario')
-  @Roles(Role.Admin) // Solo accesible para administradores
+  @Roles(Role.Administrador) // Solo accesible para administradores
   async obtenerConteoFormulariosPorUsuario() {
     return this.cpuFormularioService.contarFormulariosPorUsuario();
   }

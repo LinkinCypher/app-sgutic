@@ -8,6 +8,6 @@ export enum Role {
     Mantenimiento       = 41,
     SuperProyectos      = 50,
     Proyectos           = 51,
-    Lectura             = 10,
+    Lectura             = 60,
   }
   

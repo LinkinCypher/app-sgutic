@@ -3,6 +3,8 @@ import { Document } from 'mongoose';
 
 @Schema({ timestamps: true }) // Habilita timestamps para agregar createdAt y updatedAt
 export class CPUFormulario extends Document {
+
+  // Encabezado
   @Prop({ required: true })
   institucion: string;
 
@@ -13,11 +15,14 @@ export class CPUFormulario extends Document {
   edificio: string;
 
   @Prop({ required: true })
-  numeroFormulario: string; // Campo para almacenar el número del formulario
+  numeroFormulario: string; // Almacena el número del formulario
 
   @Prop({ required: true })
   articulo: string;
 
+
+
+  // Campos permanetes
   @Prop({ required: true })
   marca: string;
 
@@ -31,7 +36,19 @@ export class CPUFormulario extends Document {
   activoFijo: string;
 
   @Prop()
-  memoria: string;
+  usuario: string;
+
+  @Prop()
+  oficina: string;
+
+  @Prop()
+  observacion: string;
+
+
+
+  // Campos de CPU y Laptops
+  @Prop()
+  ram: string;
 
   @Prop()
   procesador: string;
@@ -40,22 +57,57 @@ export class CPUFormulario extends Document {
   sistemaOperativo: string;
 
   @Prop()
-  discoDuro: string;
+  almacenamiento: string;
 
   @Prop()
-  porcentajeDiscoDuro: string;
+  porcentaje: string;
+
+  
+  // Monitores
+  @Prop()
+  pulgadas: string;
+
+
+  // Teclados y Mouses
+  @Prop()
+  tipo: string;
+
+
+  // Scaners
+  @Prop()
+  numeroScan: string;
+
+
+  // TipoImpresora
+  @Prop()
+  tipoImpresora: string;
 
   @Prop()
-  ubicacion: string;
+  direccionIP: string;
 
   @Prop()
-  usuario: string;
+  numeroImpresiones: string;
+
+
+  // TelefonoIP
+  @Prop()
+  nombreRegistrado: string;
 
   @Prop()
-  observacion: string;
+  extension: string;
+
+
+  // Televisores
+  @Prop()
+  tipoTV: string;
 
   @Prop()
-  usuarioCreador: string; // Usuario que ha iniciado sesión y creó el formulario
+  smartTV: string;
+
+
+  // Almacena el usuario que inició la sesión
+  @Prop()
+  usuarioCreador: string;
 }
 
 export const CPUFormularioSchema = SchemaFactory.createForClass(CPUFormulario);

@@ -70,7 +70,7 @@ export class CPUFormulario extends Document {
 
 
 
-  // Teclados y Mouses
+  // Teclados, mouses, impresora y televisor
   @Prop()
   tipo: string;
 
@@ -82,10 +82,7 @@ export class CPUFormulario extends Document {
 
 
 
-  // TipoImpresora
-  @Prop()
-  tipoImpresora: string;
-
+  // Impresora
   @Prop()
   direccionIP: string;
 
@@ -104,9 +101,6 @@ export class CPUFormulario extends Document {
 
 
   // Televisores
-  @Prop()
-  tipoTV: string;
-
   @Prop()
   smartTV: string;
 

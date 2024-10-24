@@ -48,7 +48,7 @@ export class CPUFormulario extends Document {
 
   // Campos de CPU y Laptops
   @Prop()
-  ram: string;
+  ram: number;
 
   @Prop()
   procesador: string;
@@ -57,15 +57,17 @@ export class CPUFormulario extends Document {
   sistemaOperativo: string;
 
   @Prop()
-  almacenamiento: string;
+  almacenamiento: number;
 
   @Prop()
-  porcentaje: string;
+  porcentaje: number;
 
   
+
   // Monitores
   @Prop()
-  pulgadas: string;
+  pulgadas: number;
+
 
 
   // Teclados y Mouses
@@ -73,9 +75,11 @@ export class CPUFormulario extends Document {
   tipo: string;
 
 
+
   // Scaners
   @Prop()
-  numeroScan: string;
+  numeroScan: number;
+
 
 
   // TipoImpresora
@@ -86,7 +90,8 @@ export class CPUFormulario extends Document {
   direccionIP: string;
 
   @Prop()
-  numeroImpresiones: string;
+  numeroImpresiones: number;
+
 
 
   // TelefonoIP
@@ -94,7 +99,8 @@ export class CPUFormulario extends Document {
   nombreRegistrado: string;
 
   @Prop()
-  extension: string;
+  extension: number;
+
 
 
   // Televisores
@@ -103,6 +109,7 @@ export class CPUFormulario extends Document {
 
   @Prop()
   smartTV: string;
+
 
 
   // Almacena el usuario que inició la sesión

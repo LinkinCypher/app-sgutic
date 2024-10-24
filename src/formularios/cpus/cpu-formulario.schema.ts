@@ -15,10 +15,10 @@ export class CPUFormulario extends Document {
   edificio: string;
 
   @Prop({ required: true })
-  numeroFormulario: string; // Almacena el número del formulario
+  articulo: string;
 
   @Prop({ required: true })
-  articulo: string;
+  numeroFormulario: string; // Almacena el número del formulario
 
 
 

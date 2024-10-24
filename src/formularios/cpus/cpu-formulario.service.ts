@@ -73,9 +73,9 @@ export class CPUFormularioService {
   }
   
 
-  // Generar el número de formulario basado en la combinación de institución, provincia, edificio y año
+  // Generar el número de formulario basado en la combinación de institución, provincia, edificio, articulo y año
 private async generarNumeroFormulario(createFormularioDto: any): Promise<string> {
-  const { institucion, provincia, edificio } = createFormularioDto;  // Extrae los campos relevantes
+  const { institucion, provincia, edificio, articulo } = createFormularioDto;  // Extrae los campos relevantes
   const currentYear = new Date().getFullYear();  // Obtener el año actual
 
   // Contar cuántos formularios existen para la combinación de institución, provincia, edificio y el año actual
@@ -83,12 +83,13 @@ private async generarNumeroFormulario(createFormularioDto: any): Promise<string>
     institucion,
     provincia,
     edificio,
+    articulo,
     numeroFormulario: { $regex: `${currentYear}` }  // Filtrar formularios del año actual
   }).exec();
 
   // Generar el número de formulario basado en el conteo actual
   const numero = (count + 1).toString().padStart(4, '0');  // Incrementamos el contador con cuatro dígitos
-  return `${institucion}-${provincia}-${edificio}-FMA-CPU-${currentYear}-${numero}`;  // Generar el número final del formulario
+  return `${institucion}-${provincia}-${edificio}-FMA-${articulo}-${currentYear}-${numero}`;  // Generar el número final del formulario
 }
 
 
